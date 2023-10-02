@@ -32,4 +32,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/support/tickets', [\App\Http\Controllers\TicketController::class, 'index'])->name('support.ticket');
+});
+
+Route::get('fake', function (\Illuminate\Http\Request $request) {
+   \App\Models\Ticket::create($request->all());
 });
