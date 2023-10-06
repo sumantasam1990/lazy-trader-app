@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title')->fulltext();
             $table->text('message')->fulltext();
             $table->string('ticket_no')->unique()->index();
+            $table->string('status')->default('open')->index();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Policies\TicketPolicy;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +28,7 @@ class Ticket extends Model
         'deleted_at' => 'datetime:d/m/Y H:i A',
     ];
 
-    public function getCreatedAtAttribute($value)
+    public function getCreatedAtAttribute($value): string
     {
         return Carbon::parse($value)->diffForHumans();
     }
@@ -45,5 +47,10 @@ class Ticket extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(TicketMessage::class, 'ticket_id');
     }
 }
