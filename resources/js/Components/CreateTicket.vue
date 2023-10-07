@@ -17,6 +17,7 @@ const form = useForm({
     _method: 'POST',
     title: null,
     message: null,
+    avatars: null,
 });
 
 const createTicket = () => {
@@ -25,6 +26,7 @@ const createTicket = () => {
     // }
 
     form.post(route('support.ticket.store'), {
+        forceFormData: true,
         errorBag: 'createTicket',
         preserveScroll: true,
         onSuccess: () => form.reset(),
@@ -45,7 +47,7 @@ const createTicket = () => {
 
         <template #form>
 
-            <!-- Name -->
+            <!-- Title -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Title" />
                 <TextInput
@@ -58,7 +60,7 @@ const createTicket = () => {
                 <InputError :message="form.errors.message" class="mt-2" />
             </div>
 
-            <!-- Email -->
+            <!-- Message -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="email" value="Message" />
                 <TextArea
@@ -69,6 +71,14 @@ const createTicket = () => {
                     autocomplete="message"
                 />
                 <InputError :message="form.errors.message" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="email" value="Message" />
+                <input type="file" @input="form.avatars = $event.target.files" multiple />
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
             </div>
         </template>
 

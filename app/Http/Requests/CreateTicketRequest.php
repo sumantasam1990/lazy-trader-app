@@ -28,6 +28,8 @@ class CreateTicketRequest extends FormRequest
         return [
             'title' => 'required',
             'message' => 'required',
+            'avatars' => 'array',
+            'avatars.*' => 'mimes:jpg,jpeg,png,pdf',
         ];
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,5 +53,10 @@ class Ticket extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(TicketMessage::class, 'ticket_id');
+    }
+
+    public function ltFiles(): MorphMany
+    {
+        return $this->morphMany(LtFile::class, 'model');
     }
 }

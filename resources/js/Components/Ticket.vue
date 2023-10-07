@@ -35,6 +35,10 @@ defineProps({ tickets: Array, total_tickets: Number, })
                                     <img class="w-6 h-6 rounded-full object-cover mr-2" src="https://ui-avatars.com/api/?name=S+K&amp;color=ffffff&amp;background=EBF4FF;font-weight=bold" alt="user avatar">
                                     {{ ticket.user.name }}
                                 </h5>
+                                <div v-for="file in ticket.ltFiles" :key="file.id">
+                                    <img :src="file.file_url" alt="">
+                                </div>
+
                             </div>
                             <div>
                                 <div class="mt-0">
