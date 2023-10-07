@@ -14,22 +14,20 @@ use Inertia\Response;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         if (Auth::user()->user_type == 'user') {
-
             return Inertia::render('Support/Ticket', [
-                'tickets' => Ticket::query()->with(['ltFiles', 'user' => function($query) {
-                    $query->select('id', 'name');
-                }])->where('user_id', Auth::user()->id)->select('id', 'title', 'user_id', 'created_at', 'ticket_no', 'status')->orderByDesc('id')->cursorPaginate(5),
+                'tickets' => Ticket::query()->with(['lazyfiles', 'user'])
+                    ->where('user_id', Auth::user()->id)
+                    ->orderByDesc('id')
+                    ->cursorPaginate(5),
                 'total_tickets' => Ticket::query()->where('user_id', Auth::user()->id)->count('id'),
             ]);
         } else {
             return Inertia::render('Support/Ticket', [
-                'tickets' => Ticket::query()->with(['user' => function($query) {
-                    $query->select('id', 'name');
-                }])
-                    ->select('id', 'title', 'user_id', 'created_at', 'ticket_no', 'status')->orderByDesc('id')->cursorPaginate(5),
+                'tickets' => Ticket::query()->with(['lazyfiles', 'user'])
+                    ->orderByDesc('id')->cursorPaginate(5),
                 'total_tickets' => Ticket::query()->count('id'),
             ]);
         }
@@ -46,7 +44,7 @@ class TicketController extends Controller
         DB::transaction(function () use($request) {
             $ticket = Ticket::create($request->validated());
             foreach ($request->file('avatars') as $file) {
-                $ticket->ltFiles()->create([
+                $ticket->lazyfiles()->create([
                     'file' => $file->store('avatar', 'public'),
                     'ext' => $file->getClientOriginalExtension(),
                     'original_name' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),

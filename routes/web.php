@@ -49,6 +49,8 @@ Route::middleware([
     Route::get('ticket/message/{id}', [\App\Http\Controllers\MessageController::class, 'index'])->name('support.ticket.message');
 
     Route::post('/ticket/message/store', [\App\Http\Controllers\MessageController::class, 'store'])->name('support.message.store');
+
+    Route::get('/page/create', [\App\Http\Controllers\PageController::class, 'create'])->name('page.create');
 });
 
 Route::get('fake', function () {

@@ -55,7 +55,7 @@ class Ticket extends Model
         return $this->hasMany(TicketMessage::class, 'ticket_id');
     }
 
-    public function ltFiles(): MorphMany
+    public function lazyfiles(): MorphMany
     {
         return $this->morphMany(LtFile::class, 'model');
     }

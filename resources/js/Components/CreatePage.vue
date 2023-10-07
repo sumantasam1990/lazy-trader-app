@@ -16,7 +16,7 @@ const props = defineProps({
 const form = useForm({
     _method: 'POST',
     title: null,
-    message: null,
+    content: null,
     avatars: null,
 });
 
@@ -38,18 +38,18 @@ const createTicket = () => {
 <template>
     <FormSection @submitted="createTicket">
         <template #title>
-            Create your issue
+            Create a page
         </template>
 
         <template #description>
-            Share your issue or feedback to us. We will contact you within 24 hours.
+            Create your custom page with upto 10 images.
         </template>
 
         <template #form>
 
             <!-- Title -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Title" />
+                <InputLabel for="name" value="Page Title" />
                 <TextInput
                     id="title"
                     v-model="form.title"
@@ -57,32 +57,32 @@ const createTicket = () => {
                     class="mt-1 block w-full"
                     autocomplete="title"
                 />
-                <InputError :message="form.errors.message" class="mt-2" />
+                <InputError :message="form.errors.title" class="mt-2" />
             </div>
 
             <!-- Message -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Message" />
+                <InputLabel for="email" value="Page Content" />
                 <TextArea
                     id="message"
-                    v-model="form.message"
+                    v-model="form.content"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="message"
                 />
-                <InputError :message="form.errors.message" class="mt-2" />
+                <InputError :message="form.errors.content" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
                 <div class="w-64 mt-4">
                     <label for="file-upload" class="block text-gray-700 text-sm font-bold mb-2">
-                        Choose a file: (Optional)
+                        Choose image: (Optional)
                     </label>
                     <label
                         class="w-full flex flex-row items-center px-4 py-6 bg-white rounded-md shadow-md tracking-wide uppercase cursor-pointer hover:bg-blue-300 hover:text-white"
                     >
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABZUlEQVR4nO3XQUoDMRiG4ddxpbjpGfQCRQXxcFWLXSp2Nq7qEerCnXvxEM4pVMTCwC8DEUKw2iH5kwnmgyxappnvaTOdDJSUlGySXWAKNEALSI9hpyJR+eeepdcBFikQU4/yLkBSIJrAgOiIVgEQFSFKgG7cxUBoAiQGQhsg2ogYANFExAKIFiImQDQQvoBta67Vhp9ZhET4AvatuWYpEOI5JiFKpAR8AKdkDBCDOAcOnGsiG4DP8E4BUH4Bv5QlxD9bQvfAMTACTnIDXIconApwZc7X7X9q4B2Yh9gPxfzmt4Db0NvrlOUlBCJ1efFFaJV/6FHeC6EFODTz1z88yPz2uh4KYM/M/+aUrZzjKgfxOhTAkfWY2f1l3ljLwz4O8/7cHHc5FMCjWf9/ndM7ojiWwNhsG8Y5AmRN2aCANndAkzvgInfADvCUM+AbcQa8KF8TaoDYWZnyn2Samdli9L7rlhA5X2BWIDlDOlRUAAAAAElFTkSuQmCC" alt="icon">
-                        <span class="mt-2 text-base leading-normal font-semibold text-black">Select a file</span>
+                        <span class="mt-2 text-base leading-normal font-semibold text-black">Select images</span>
                         <input
                             @input="form.avatars = $event.target.files"
                             type="file"
@@ -101,11 +101,11 @@ const createTicket = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
+                Created.
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Create
             </PrimaryButton>
         </template>
     </FormSection>

@@ -12,9 +12,9 @@ use Inertia\Response;
 
 class MessageController extends Controller
 {
-    public function index(int $id): Response
+    public function index(int $id)
     {
-        $messages = Ticket::query()->with(['messages.parent', 'messages.child'])
+        $messages = Ticket::query()->with(['messages.parent', 'messages.child', 'lazyfiles'])
             ->where('id', $id)
             //->orderByDesc('id')
             ->first();

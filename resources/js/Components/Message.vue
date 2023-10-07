@@ -6,6 +6,7 @@ import ActionMessage from "@/Components/ActionMessage.vue";
 import {onMounted, ref} from "vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const { tickets } = defineProps(["tickets"]);
 
@@ -28,6 +29,17 @@ onMounted(() => {
     scrollToBottom(); // Automatically scroll to the bottom when the component is mounted
 });
 
+const downloadFile = (url, fileName) => {
+    const fullURL = url;
+
+    const link = document.createElement('a');
+    link.href = fullURL;
+    link.target = '_blank';
+    link.download = fileName;
+
+    link.click();
+};
+
 </script>
 
 <template>
@@ -45,17 +57,21 @@ onMounted(() => {
                 </p>
             </div>
 
-            <Dropdown :contentClasses="['py-1', 'bg-white']" :width="'48'" :align="'right'">
-                <template #trigger>
-                    <button class="py-2 px-2 text-white bg-black rounded">Status</button>
-                </template>
-                <template #content>
-                    <ul class="py-2 px-2">
-                        <li @click="selectStatus('Closed')">Closed</li>
-                        <li @click="selectStatus('In-Progress')">In-Progress</li>
-                    </ul>
-                </template>
-            </Dropdown>
+<!--            <Dropdown :contentClasses="['py-1', 'bg-white']" :width="'48'" :align="'right'">-->
+<!--                <template #trigger>-->
+<!--                    <button class="py-2 px-2 text-white bg-black rounded">Status</button>-->
+<!--                </template>-->
+<!--                <template #content>-->
+<!--                    <ul class="py-2 px-2">-->
+<!--                        <li @click="selectStatus('Closed')">Closed</li>-->
+<!--                        <li @click="selectStatus('In-Progress')">In-Progress</li>-->
+<!--                    </ul>-->
+<!--                </template>-->
+<!--            </Dropdown>-->
+
+            <div v-for="file in tickets.lazyfiles" :key="file.id">
+                <SecondaryButton class="mt-4" type="button" @click="downloadFile(file.file_url, file.original_name)">Attachment</SecondaryButton>
+            </div>
 
         </div>
 
